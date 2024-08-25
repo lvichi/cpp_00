@@ -11,11 +11,10 @@
 /* ************************************************************************** */
 
 #include <iostream>
-#include <sstream>
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
-int string_to_int(const std::string& str);
+std::string user_input(std::string var_name);
 
 int main(void)
 {
@@ -26,54 +25,20 @@ int main(void)
     {
         std::string command;
         std::cout << "Enter a command: ";
-        std::cin >> command;
+        std::getline(std::cin, command);
         if (command == "ADD")
         {
-            std::string first_name = "";
-            std::string last_name = "";
-            std::string nickname = "";
-            std::string phone_number = "";
-            std::string darkest_secret = "";
+            std::string first_name = user_input("first name");
+            std::string last_name = user_input("last name");
+            std::string nickname = user_input("nickname");
+            std::string phone_number = user_input("phone number");
+            std::string darkest_secret = user_input("darkest secret");
 
-            while (first_name == "") {
-                std::cout << "Enter first name: ";
-                std::cin >> first_name;
-                if (first_name == "")
-                    std::cout << "First name cannot be empty" << std::endl;
-                contact.set_first_name(first_name);
-            }
-
-            while (last_name == "") {
-                std::cout << "Enter last name: ";
-                std::cin >> last_name;
-                if (last_name == "")
-                    std::cout << "Last name cannot be empty" << std::endl;
-                contact.set_last_name(last_name);
-            }
-
-            while (nickname == "") {
-                std::cout << "Enter nickname: ";
-                std::cin >> nickname;
-                if (nickname == "")
-                    std::cout << "Nickname cannot be empty" << std::endl;
-                contact.set_nickname(nickname);
-            }
-
-            while (phone_number == "") {
-                std::cout << "Enter phone number: ";
-                std::cin >> phone_number;
-                if (phone_number == "")
-                    std::cout << "Phone number cannot be empty" << std::endl;
-                contact.set_phone_number(string_to_int(phone_number));
-            }
-
-            while (darkest_secret == "") {
-                std::cout << "Enter darkest secret: ";
-                std::cin >> darkest_secret;
-                if (darkest_secret == "")
-                    std::cout << "Darkest secret cannot be empty" << std::endl;
-                contact.set_darkest_secret(darkest_secret);
-            }
+            contact.set_first_name(first_name);
+            contact.set_last_name(last_name);
+            contact.set_nickname(nickname);
+            contact.set_phone_number(phone_number);
+            contact.set_darkest_secret(darkest_secret);
 
             phonebook.add_contact(contact);
         }
@@ -87,26 +52,31 @@ int main(void)
                 continue;
             while (1) {
                 std::cout << "Enter index: ";
-                std::cin >> index;
-                if (string_to_int(index) < 0 || string_to_int(index) > contact_count) {
+                std::getline(std::cin, index);
+                if (index[1] || index[0] < '0' || index[0] > (contact_count + '0')) {
                     std::cout << "Invalid index" << std::endl;
                     continue;
                 }
                 break;
             }
-            phonebook.display_contact(string_to_int(index));
+            phonebook.display_contact(index[0] - '0');
         }
         else if (command == "EXIT")
             break;
         else
-            std::cout << "Invalid command" << std::endl;
+            std::cerr << "--Error: invalid command--" << std::endl;
     }
     return 0;
 }
 
-int string_to_int(const std::string& str) {
-    std::stringstream ss(str);
-    int num;
-    ss >> num;
-    return num;
+std::string user_input(std::string var_name) {
+    std::string str = "";
+
+    while (str == "") {
+        std::cout << "Enter " << var_name << ": ";
+        std::getline(std::cin, str);
+        if (str == "")
+            std::cerr << "--Error: " << var_name << " cannot be empty" << std::endl;
+    }
+    return str;
 }

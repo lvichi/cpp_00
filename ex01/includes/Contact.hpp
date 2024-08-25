@@ -21,7 +21,7 @@ class Contact {
         string first_name;
         string last_name;
         string nickname;
-        int phone_number;
+        string phone_number;
         string darkest_secret;
     public:
         Contact();
@@ -34,7 +34,7 @@ class Contact {
 
         void    set_nickname(string nickname);
 
-        void    set_phone_number(int phone_number);
+        void    set_phone_number(string phone_number);
 
         void    set_darkest_secret(string darkest_secret);
 
@@ -44,7 +44,7 @@ class Contact {
 
         string  get_nickname(void);
 
-        int     get_phone_number(void);
+        string  get_phone_number(void);
 
         string  get_darkest_secret(void);
 };

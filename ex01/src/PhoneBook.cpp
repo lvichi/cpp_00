@@ -36,9 +36,10 @@ void    PhoneBook::add_contact(Contact contact) {
 int    PhoneBook::display_contacts(void) {
     int i = 0;
 
-    std::cout << "First Name| Last Name|  Nickname| Phone Num" << std::endl;
+    std::cout << "   First Name| Last Name|  Nickname| Phone Num" << std::endl;
 
     while (this->contacts[i].get_first_name() != "") {
+        cout << i << ": ";
         cout << this->contacts[i].get_first_name() << "|";
         cout << this->contacts[i].get_last_name() << "|";
         cout << this->contacts[i].get_nickname() << "|";
