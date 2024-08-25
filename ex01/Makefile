@@ -6,7 +6,7 @@
 #    By: lvichi <lvichi@student.42porto.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/30 19:57:48 by lvichi            #+#    #+#              #
-#    Updated: 2024/04/07 17:45:12 by ecarvalh         ###   ########.fr        #
+#    Updated: 2024/04/07 17:45:12 by lvichi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,9 @@ NAME = phonebook
 CPP = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 RM = rm -fr
-FILES = *.cpp
-OBJS = *.o
+FILES = src/*.cpp
+OBJS = obj/*.o
+INCLUDES = -I includes/
 
 all: $(NAME)
 
@@ -24,7 +25,9 @@ $(NAME): $(OBJS)
 	@$(CPP) $(CFLAGS) $(OBJS) -o $(NAME)
 
 $(OBJS): $(FILES)
-	@$(CPP) $(CFLAGS) -c $(FILES)
+	@mkdir -p obj
+	@$(CPP) $(CFLAGS) -c $(FILES) $(INCLUDES)
+	@mv *.o obj/
 
 clean:
 	@$(RM) $(OBJS) obj

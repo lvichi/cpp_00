@@ -10,14 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#pragma once
 
-#ifndef CPP_00_PHONEBOOK_HPP
-#define CPP_00_PHONEBOOK_HPP
+#include <iostream>
 
+using std::string;
 
-class PhoneBook {
+class Contact {
+    private:
+        string first_name;
+        string last_name;
+        string nickname;
+        int phone_number;
+        string darkest_secret;
+    public:
+        Contact();
 
+        ~Contact();
+
+        void    set_first_name(string first_name);
+
+        void    set_last_name(string last_name);
+
+        void    set_nickname(string nickname);
+
+        void    set_phone_number(int phone_number);
+
+        void    set_darkest_secret(string darkest_secret);
+
+        string  get_first_name(void);
+
+        string  get_last_name(void);
+
+        string  get_nickname(void);
+
+        int     get_phone_number(void);
+
+        string  get_darkest_secret(void);
 };
-
-
-#endif //CPP_00_PHONEBOOK_HPP
