@@ -53,7 +53,7 @@ int main(void)
             while (1) {
                 std::cout << "Enter index: ";
                 std::getline(std::cin, index);
-                if (index[1] || index[0] < '0' || index[0] > (contact_count + '0')) {
+                if (index[1] || index[0] < '0' || index[0] >= (contact_count + '0')) {
                     std::cout << "Invalid index" << std::endl;
                     continue;
                 }

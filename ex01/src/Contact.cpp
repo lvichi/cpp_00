@@ -47,7 +47,7 @@ void    Contact::set_darkest_secret(std::string darkest_secret) {
 
 // Returns the first name
 std::string Contact::get_first_name(void) {
-    return this->first_name;
+	return this->first_name;
 }
 
 // Returns the last name

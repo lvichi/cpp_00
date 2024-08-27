@@ -38,12 +38,12 @@ int    PhoneBook::display_contacts(void) {
 
     std::cout << "   First Name| Last Name|  Nickname| Phone Num" << std::endl;
 
-    while (this->contacts[i].get_first_name() != "") {
+    while (i < MAX_CONTACTS && this->contacts[i].get_first_name() != "") {
         cout << i << ": ";
-        cout << this->contacts[i].get_first_name() << "|";
-        cout << this->contacts[i].get_last_name() << "|";
-        cout << this->contacts[i].get_nickname() << "|";
-        cout << this->contacts[i].get_phone_number() << std::endl;
+        cout << this->_print_info(this->contacts[i].get_first_name()) 	<< "|";
+		cout << this->_print_info(this->contacts[i].get_last_name()) 	<< "|";
+		cout << this->_print_info(this->contacts[i].get_nickname()) 	<< "|";
+		cout << this->_print_info(this->contacts[i].get_phone_number()) << std::endl;
         i++;
     }
     return i;
@@ -52,12 +52,82 @@ int    PhoneBook::display_contacts(void) {
 // Displays a contact in the phonebook
 void    PhoneBook::display_contact(int index) {
     if (this->contacts[index].get_first_name() != "") {
-        cout << this->contacts[index].get_first_name() << std::endl;
-        cout << this->contacts[index].get_last_name() << std::endl;
-        cout << this->contacts[index].get_nickname() << std::endl;
-        cout << this->contacts[index].get_phone_number() << std::endl;
-        cout << this->contacts[index].get_darkest_secret() << std::endl;
+        cout << this->contacts[index].get_first_name() 		<< std::endl;
+        cout << this->contacts[index].get_last_name() 		<< std::endl;
+        cout << this->contacts[index].get_nickname() 		<< std::endl;
+        cout << this->contacts[index].get_phone_number() 	<< std::endl;
+        cout << this->contacts[index].get_darkest_secret() 	<< std::endl;
     }
     else
         cout << "Contact not found" << std::endl;
+}
+
+// Return the info of a contact right aligned and limited to 10 characters
+string    PhoneBook::_print_info(string info) {
+	int	info_len = this->_utf8_strlen(info);
+
+	if (info_len > 10)
+		return this->_utf8_substr(info, 0, 9) + ".";
+	else
+		return std::string(10 - info_len, ' ') + info;
+}
+
+
+// Count the number of characters in a UTF-8 string
+int		PhoneBook::_utf8_strlen(string str) {
+	size_t	i = 0;
+	int		len = 0;
+
+	while (i < str.size()) {
+		if ((str[i] & 0x80) == 0x00)
+			// 1-byte character: 0xxxxxxx
+			i += 1;
+		else if ((str[i] & 0xE0) == 0xC0)
+			// 2-byte character: 110xxxxx 10xxxxxx
+			i += 2;
+		else if ((str[i] & 0xF0) == 0xE0)
+			// 3-byte character: 1110xxxx 10xxxxxx 10xxxxxx
+			i += 3;
+		else if ((str[i] & 0xF8) == 0xF0)
+			// 4-byte character: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+			i += 4;
+		else
+			// Invalid utf8 character
+			i++;
+		len++;
+	}
+
+	return len;
+}
+
+
+// Return part of UTF-8 string (utf8_substr)
+string		PhoneBook::_utf8_substr(string str, int start, int len) {
+	size_t	byte_start = PhoneBook::_utf8_byte_index(str, start);
+	size_t	byte_end = PhoneBook::_utf8_byte_index(str, start + len);
+
+	return str.substr(byte_start, byte_end - byte_start);
+}
+
+
+// Return the byte index of a character in a UTF-8 string
+size_t		PhoneBook::_utf8_byte_index(string str, int char_pos) {
+	size_t	i = 0;
+	int 	char_count = 0;
+
+	while (i < str.size() && char_count < char_pos) {
+		if ((str[i] & 0x80) == 0x00)
+			i += 1;
+		else if ((str[i] & 0xE0) == 0xC0)
+			i += 2;
+		else if ((str[i] & 0xF0) == 0xE0)
+			i += 3;
+		else if ((str[i] & 0xF8) == 0xF0)
+			i += 4;
+		else
+			i++;
+		char_count++;
+	}
+
+	return i;
 }

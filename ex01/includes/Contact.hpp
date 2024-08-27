@@ -23,6 +23,7 @@ class Contact {
         string nickname;
         string phone_number;
         string darkest_secret;
+
     public:
         Contact();
 
