@@ -36,14 +36,21 @@ void    PhoneBook::add_contact(Contact contact) {
 int    PhoneBook::display_contacts(void) {
     int i = 0;
 
-    std::cout << "   First Name| Last Name|  Nickname| Phone Num" << std::endl;
+    std::cout << std::setw(13) << std::right << "First Name" << "|";
+    std::cout << std::setw(10) << std::right << "Last Name"  << "|";
+    std::cout << std::setw(10) << std::right << "Nickname"   << "|";
+    std::cout << std::setw(10) << std::right << "Phone Num"  << std::endl;
 
-    while (i < MAX_CONTACTS && this->contacts[i].get_first_name() != "") {
-        cout << i << ": ";
-        cout << this->_print_info(this->contacts[i].get_first_name()) 	<< "|";
-		cout << this->_print_info(this->contacts[i].get_last_name()) 	<< "|";
-		cout << this->_print_info(this->contacts[i].get_nickname()) 	<< "|";
-		cout << this->_print_info(this->contacts[i].get_phone_number()) << std::endl;
+    while (i < MAX_CONTACTS && !this->contacts[i].get_first_name().empty()) {
+        std::cout << i << ": ";
+        std::cout << std::setw(10)  << std::setfill(' ')    << std::right
+                  << this->_print_info(this->contacts[i].get_first_name())   << "|";
+        std::cout << std::setw(10)  << std::setfill(' ')    << std::right
+                  << this->_print_info(this->contacts[i].get_last_name())    << "|";
+        std::cout << std::setw(10)  << std::setfill(' ')    << std::right
+                  << this->_print_info(this->contacts[i].get_nickname())     << "|";
+        std::cout << std::setw(10)  << std::setfill(' ')    << std::right
+                  << this->_print_info(this->contacts[i].get_phone_number()) << std::endl;
         i++;
     }
     return i;
